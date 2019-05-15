@@ -2,8 +2,6 @@
 
 ### Explore US Bike Share Data
 
-**Derrickjameslewis@gmail.com**
-
 The project asks to investigate some bikeshare data from 3 .csv files.
 
 There are 4 lines of import. 
@@ -177,16 +175,14 @@ def load_data(city, month, day):
     return df
 ```
 
-This was asked in the template. Having converted the columns of hour and month into strings, printing a readable most frequent Month and Day could happen with just one line of code. This works with the version of Pandas from my terminal. For some reason on the udacity web terminal, the month_name opbject is not found.
-
-The most frequent hour required a little more work converting to a traditionally read integer.
+This was asked in the template. Having converted the columns of hour and month into strings, printing a readable most frequent Month and Day could happen with just one line of code. This works with the version of Pandas from my terminal. For some reason on the udacity web terminal, the month_name function is not found.
 
 However, here is where the code initially broke and took far to long to fix. In looking for the most frequent month, it wasn't correct to print a "frequent month" when it had been filtered to only one month of date. Thus, I had asked for the 'month' variable created in the first get_filters() function. I figured the return statment made the scope global. It did not. I tried to create a second variable that did save outside the function, but that didn't work. I have finally realized that I could add the variable as arguments in the function. This would bring the values into this function and allow me to create an 'if' statement to first check if the user had filtered the month before claiming it was the most frequent.
 
 ```
 def time_stats(df, month, day):
     """Displays statistics on the most frequent times of travel.
-    !!! Need to solve "all" problem. If I've filtered month, it should not print 'common month'. """
+    """
     print("\nCalculating The Most Frequent times of travel...\n")
     start_time = time.time()
     # display the most common month
@@ -266,13 +262,12 @@ def trip_duration_stats(df):
           " seconds.\n\n".format(hour, minute, second))
 ```
 
-The next function is where my variable scope problem earlier actually broke the code and took significant time to fix. I'm asked to create a function to return user stats from the data.
 
-One of the requirements is to show the breakdown of gender. Well, the .csv for Washington doesn't have a column for gender. So, I need to write an 'if' statement to ask if the city variable is New York or Chicago first.
+One of the requirements is to show the breakdown of gender. The .csv for Washington doesn't have a column for gender. So, I need to write an 'if' statement to ask if the city variable is New York or Chicago first.
 
 However, city, month, or day varible from the 'get_filters()' function wasn't passed through. Instead, I chose to ask if a Gender colomn existed in a column first with an 'if' statement. This is better in case another city is added later to the list of .csv files.
 
-Addtionally, I found the to_string() to remove the additional information that .count() outputted. Sadly, the newest version on pandas removed one of the arguments from to_string() that would have fixed the alignment issue that shows up in the terminal (I think). However, removing the header was a win for me. I found the to_string() here: https://stackoverflow.com/questions/40278845/suppress-name-dtype-from-python-pandas-describe
+Addtionally, I found the to_string() to remove the additional information that .count() outputted. Sadly, the newest version of pandas removed one of the arguments from to_string() that would have fixed the alignment issue that shows up in the terminal (I think). However, removing the header was a win for me. I found the to_string() here: https://stackoverflow.com/questions/40278845/suppress-name-dtype-from-python-pandas-describe
 
 ```
 def user_stats(df):
@@ -300,7 +295,7 @@ def user_stats(df):
         print("--> The data from this city did not include age.\n\n")
 ```    
     
-Finally, the rubric requires the script to ask if the user would like to see raw data in groups of 5 rows. The .iloc[] gave me some trouble at first until I figured that I need to add a new argument in the function.
+Finally, the rubric requires the script to ask if the user would like to see raw data in groups of 5 rows. The .iloc[] built into Pandas allows for this.
 
 ```
 def display_data(df, start):
